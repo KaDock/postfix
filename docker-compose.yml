@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  postfix:
+    image: kalledk/postfix
+    init: true
+    ports:
+      - "587:587"
+    volumes:
+      - "./db:/etc/sasl2/db:Z"
+      - "./ssl:/etc/postfix/ssl:Z"
+    env_file:
+      - prod.env

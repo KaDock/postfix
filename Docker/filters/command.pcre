@@ -1,0 +1,4 @@
+# Bounce-never mail sink. Use notify_classes=bounce,resource,software
+# to send bounced mail to the postmaster (with message body removed).
+/^(RCPT\s+TO:.*)\s+NOTIFY=\S+(.*)/            $1 NOTIFY=NEVER$2
+/^(RCPT\s+TO:.*)/                             $1 NOTIFY=NEVER
