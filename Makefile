@@ -1,4 +1,4 @@
-REPO := kalledk
+REPO := kadock
 NAME := s6-postfix
 TAG := latest
 IMAGE := ${REPO}/${NAME}:${TAG}

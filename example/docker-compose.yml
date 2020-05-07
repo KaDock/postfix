@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   postfix:
-    image: kalledk/s6-postfix
+    image: kadock/s6-postfix
     ports:
       - "587:587"
     volumes:
