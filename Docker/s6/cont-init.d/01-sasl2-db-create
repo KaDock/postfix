@@ -1,0 +1,18 @@
+#!/usr/bin/execlineb -P
+
+
+
+define SASL2_EMPTY_DB
+
+"VERSION=3
+format=print
+type=hash
+db_pagesize=4096
+HEADER=END
+DATA=END"
+
+
+if -n { test -f "/var/lib/sasl2/sasldb2" }
+  foreground { echo "creating new /var/lib/sasl2/sasldb2..." }
+  umask 0137
+  pipeline { echo "${SASL2_EMPTY_DB}" } db_load "/var/lib/sasl2/sasldb2"

@@ -1,18 +1,18 @@
-build:
-	sudo docker build -t kalledk/postfix Docker
+REPO := kalledk
+NAME := s6-postfix
+TAG := latest
+IMAGE := ${REPO}/${NAME}:${TAG}
 
-enter:
-	sudo docker-compose run --rm postfix /bin/sh
+export SASLDB_DIR = /var/lib/sasl2
+export SASLDB_PATH = /var/lib/sasl2/sasldb2
+export SSL_DIR = /etc/postfix/ssl
 
-down:
-	sudo docker-compose down
+generate:
+	./gen.sh Docker/s6/fix-attrs.d/01-sasl2-db-dir
+	./gen.sh Docker/s6/cont-init.d/01-sasl2-db-create
+	./gen.sh Docker/sasl2/smtpd.conf
+	./gen.sh Docker/certmgr/get_all
 
-up:
-	sudo docker-compose up -d
 
-
-dump:
-	sudo docker-compose run --rm postfix /dump.sh | sudo tee dump.ini
-
-load:
-	sudo docker-compose run --rm postfix /load.sh < dump.ini
+build: generate
+	docker build --build-arg SASLDB_DIR=${SASLDB_DIR} --build-arg SSL_DIR=${SSL_DIR} -t ${IMAGE} Docker

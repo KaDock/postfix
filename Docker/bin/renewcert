@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+. /etc/certmgr/certmgr.conf
+if [[ "$1" == "gethostkey" ]]
+then
+	ssh -i ${KEY} -oStrictHostKeyChecking=accept-new -p ${PORT} ${USER}@${SERVER} echo "hello"
+	exit
+fi
+
+if [[ "$1" == "clean" ]]
+then
+	rm /var/lib/certmgr/lastmodified.old
+	exit
+fi
+
+sftp -i ${KEY} -b /usr/share/certmgr/get_last -P ${PORT} ${USER}@${SERVER}
+cmp -s /var/lib/certmgr/lastmodified /var/lib/certmgr/lastmodified.old && echo "nothing to do" && exit
+sftp -i ${KEY} -b /usr/share/certmgr/get_all -P ${PORT} ${USER}@${SERVER}
+mv /var/lib/certmgr/lastmodified /var/lib/certmgr/lastmodified.old
+echo "certicates updated"
+
+if [[ "$1" == "reload" ]]
+then
+	postfix reload
+fi

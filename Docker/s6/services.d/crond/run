@@ -1,0 +1,3 @@
+#!/usr/bin/execlineb -P
+foreground { echo "starting crond" }
+/usr/sbin/crond -f

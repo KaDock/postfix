@@ -1,0 +1,13 @@
+#!/usr/bin/execlineb -P
+
+with-contenv
+
+importas DM_DOMAIN DM_DOMAIN
+importas DM_HOSTNAME DM_HOSTNAME
+importas DM_BOUNCE DM_BOUNCE
+foreground { echo "postconf -e mydomain=${DM_DOMAIN}" }
+foreground { postconf -e mydomain=${DM_DOMAIN} }
+foreground { echo "postconf -e myhostname=${DM_HOSTNAME}" }
+foreground { postconf -e myhostname=${DM_HOSTNAME} }
+foreground { echo "postconf -e bounce_notice_recipient=${DM_BOUNCE}" }
+foreground { postconf -e bounce_notice_recipient=${DM_BOUNCE} }

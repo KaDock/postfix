@@ -1,0 +1,2 @@
+get fullchain.pem /etc/postfix/ssl/server.pem
+get server.key /etc/postfix/ssl/server.key

@@ -1,0 +1,50 @@
+#!/usr/bin/env sh
+
+usage() {
+        echo "saslconf [-c conf] field"
+        exit 1
+}
+
+
+if [[ "$#" -eq 3 ]]
+then
+        CONF_ARG=$1
+        if [[ ! "${CONF_ARG}" == "-c" ]]
+        then
+                usage
+                exit 1
+        fi
+        CONF=$2
+        shift
+        shift
+fi
+
+if [[ ! "$#" -eq 1 ]]
+then
+        usage
+        exit 1
+fi
+
+CONF=${CONF:-"/etc/sasl2/smtpd.conf"}
+FIELD=$1
+
+if [[ ! -f "${CONF}" ]]
+then
+        echo "${CONF} does not exists"
+        exit 2
+fi
+
+if [[ ! -r "${CONF}" ]]
+then
+        echo "${CONF} can not be read"
+        exit 3
+fi
+
+LINE=`grep "^${FIELD}:" /etc/sasl2/smtpd.conf`
+if [[ -z "${LINE}" ]]
+then
+        echo "field ${FIELD} does not exists"
+        exit 4
+fi
+
+echo "${LINE}" | sed "s/^${FIELD}:\s*\(.*\)\s*$/\1/"

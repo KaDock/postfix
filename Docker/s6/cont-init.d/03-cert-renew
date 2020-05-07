@@ -1,0 +1,3 @@
+#!/usr/bin/execlineb -P
+foreground { /usr/sbin/renewcert gethostkey }
+/usr/sbin/renewcert 

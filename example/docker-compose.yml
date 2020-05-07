@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  postfix:
+    image: kalledk/s6-postfix
+    ports:
+      - "587:587"
+    volumes:
+      - "./certmgr:/etc/certmgr:Z"
+      - "./sasl2:/var/lib/sasl2:Z"
+      - "./certs:/etc/postfix/ssl:Z"
+    env_file:
+      - prod.env
