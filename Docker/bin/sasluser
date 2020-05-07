@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-SASLDB=`saslconf sasldb_path`
+SASLDB=$(saslconf sasldb_path)
 
 usage() {
 	echo "sasluser add <domain> <user>"
@@ -25,7 +25,7 @@ add() {
 	fi
 	SASL_DOMAIN=$1
 	SASL_USER=$2
-	/usr/sbin/saslpasswd2 -c -f ${SASLDB} -u ${SASL_DOMAIN} ${SASL_USER}
+	/usr/sbin/saslpasswd2 -c -f "${SASLDB}" -u "${SASL_DOMAIN}" "${SASL_USER}"
 }
 
 del() {
@@ -36,19 +36,19 @@ del() {
 	fi
 	SASL_DOMAIN=$1
 	SASL_USER=$2
-	/usr/sbin/saslpasswd2 -d -f ${SASLDB} -u ${SASL_DOMAIN} ${SASL_USER}
+	/usr/sbin/saslpasswd2 -d -f "${SASLDB}" -u "${SASL_DOMAIN}" "${SASL_USER}"
 }
 
 list() {
-	/usr/sbin/sasldblistusers2 -f ${SASLDB}
+	/usr/sbin/sasldblistusers2 -f "${SASLDB}"
 }
 
 dump() {
-	/usr/bin/db_dump -p ${SASLDB}
+	/usr/bin/db_dump -p "${SASLDB}"
 }
 
 load() {
-	sed -e 's///' | /usr/bin/db_load ${SASLDB}
+	sed -e 's///' | /usr/bin/db_load "${SASLDB}"
 }
 
 if [ "$#" -lt 1 ]
